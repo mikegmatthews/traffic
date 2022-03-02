@@ -60,7 +60,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function spawn_enemy (enemy: Sprite) {
     enemy.setPosition(170, enemySpawnPoint)
-    enemy.vx = -50
+    enemy.vx = randint(-40, -80)
     animation.runImageAnimation(
     enemy,
     [img`
