@@ -147,12 +147,6 @@ setup_player()
 game.onUpdate(function () {
     player_car.x += player_dx
     player_car.y += player_dy
-    if (player_car.x < 8 || 152 < player_car.x) {
-        player_dx = 0
-    }
-    if (64 <= player_car.y && player_car.y <= 112) {
-        player_dy = 0
-    }
 })
 game.onUpdateInterval(2000, function () {
     enemySpawnPoint = choose_spawn_point()
