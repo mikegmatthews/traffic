@@ -25,6 +25,12 @@ function setup_background () {
     scene.setBackgroundImage(assets.image`mountain_bg`)
     lane1 = sprites.create(assets.image`lane_divider_1`, SpriteKind.Lane)
     lane1.setPosition(80, 90)
+    animation.runImageAnimation(
+    lane1,
+    assets.animation`lane_moving`,
+    100,
+    true
+    )
 }
 function move_player_x (amount: number) {
     mySprite.x += amount
