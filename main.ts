@@ -136,6 +136,9 @@ function spawn_enemy (enemy: Sprite) {
     true
     )
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.over(false, effects.slash)
+})
 let enemySpawnPoint = 0
 let player_dx = 0
 let spawnPoint = 0
@@ -144,9 +147,16 @@ let player_car: Sprite = null
 let player_dy = 0
 setup_background()
 setup_player()
+info.setScore(0)
 game.onUpdate(function () {
     player_car.x += player_dx
     player_car.y += player_dy
+    if (player_car.x < 8 || 152 < player_car.x) {
+        player_dx = 0
+    }
+    if (player_car.y < 64 || 112 < player_car.y) {
+        player_dy = 0
+    }
 })
 game.onUpdateInterval(2000, function () {
     enemySpawnPoint = choose_spawn_point()
@@ -168,4 +178,7 @@ game.onUpdateInterval(2000, function () {
         . e e f b c c f e e f b c c f . 
         . . . . b b f . . . . b b f . . 
         `, SpriteKind.Enemy))
+})
+game.onUpdateInterval(100, function () {
+    info.changeScoreBy(1)
 })
