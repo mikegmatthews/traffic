@@ -137,7 +137,7 @@ function spawn_enemy (enemy: Sprite) {
     )
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-	
+    game.over(false, effects.slash)
 })
 let enemySpawnPoint = 0
 let player_dx = 0
