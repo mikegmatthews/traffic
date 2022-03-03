@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const Lane = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    move_player_y(-1)
+    move_player_y(player_vy * -1)
 })
 function move_player_y (amount: number) {
     player_dy = amount
@@ -21,7 +21,7 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
     move_player_y(0)
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    move_player_x(-1)
+    move_player_x(player_vx * -1)
 })
 function setup_background () {
     scene.setBackgroundColor(9)
@@ -42,7 +42,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     move_player_x(0)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    move_player_x(1)
+    move_player_x(player_vx)
 })
 function choose_spawn_point () {
     spawnPoint = randint(0, 2)
@@ -56,7 +56,7 @@ function move_player_x (amount: number) {
     player_dx = amount
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    move_player_y(1)
+    move_player_y(player_vy)
 })
 function spawn_enemy (enemy: Sprite) {
     enemy.setPosition(170, enemySpawnPoint)
@@ -145,15 +145,31 @@ let spawnPoint = 0
 let lane1: Sprite = null
 let player_car: Sprite = null
 let player_dy = 0
+let player_vy = 0
+let player_vx = 0
 setup_background()
 setup_player()
 info.setScore(0)
+player_vx = 65
+player_vy = 55
 game.onUpdate(function () {
-    if (player_car.x + player_dx >= 8 && player_car.x + player_dx <= scene.screenWidth() - 8) {
-        player_car.x += player_dx
+    if (player_dx < 0 && player_car.x >= 8) {
+        player_car.vx = player_dx
+    } else {
+        if (player_dx > 0 && player_car.x <= scene.screenWidth() - 8) {
+            player_car.vx = player_dx
+        } else {
+            player_car.vx = 0
+        }
     }
-    if (player_car.y + player_dy >= 64 && player_car.y + player_dy <= scene.screenHeight() - 8) {
-        player_car.y += player_dy
+    if (player_dy < 0 && player_car.y >= 64) {
+        player_car.vy = player_dy
+    } else {
+        if (player_dy > 0 && player_car.y <= scene.screenHeight() - 8) {
+            player_car.vy = player_dy
+        } else {
+            player_car.vy = 0
+        }
     }
 })
 game.onUpdateInterval(2000, function () {
